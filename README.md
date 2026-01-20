@@ -36,7 +36,6 @@ graph TD
     
     subgraph "🐳 Docker Container"
         API[⚡️ FastAPI Server]
-        Auth[🔒 Validation]
         Embed[📄 embed.py Script]
         
         subgraph "🧠 AI / ML"
@@ -49,17 +48,17 @@ graph TD
     end
 
     %% Flow
-    User -->|POST /query| API
-    API -->|1. Search Context| Chroma
-    Chroma --x|2. Return Top K Docs| API
-    API -->|3. Prompt (Context + Query)| Ollama
+    User -->|"POST /query"| API
+    API -->|"1. Search Context"| Chroma
+    Chroma --x|"2. Return Top K Docs"| API
+    API -->|"3. Prompt (Context + Query)"| Ollama
     Ollama <-->|Inference| Model
-    Ollama -->|4. Generated Answer| API
-    API -->|5. JSON Response| User
+    Ollama -->|"4. Generated Answer"| API
+    API -->|"5. JSON Response"| User
 
     %% Initialization
-    Docs -.->|Read on Startup| Embed
-    Embed -.->|Store Vectors| Chroma
+    Docs -.->|"Read on Startup"| Embed
+    Embed -.->|"Create/Update DB"| Chroma
 ```
 
 ---
@@ -71,7 +70,7 @@ graph TD
 
 ### 🛠 Installation & Running
 
-The setup is simplified to a standard Docker build and run.
+The setup is simplified to a standard Docker build and run. The container will automatically execute `embed.py` to create the ChromaDB database from your documents.
 
 **1. Build the Image**
 ```bash
